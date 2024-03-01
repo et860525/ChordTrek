@@ -20,7 +20,7 @@ import ListItemText from "@mui/material/ListItemText";
 import { NextLinkComposed } from "./Link";
 import { usePathname } from "next/navigation";
 
-const drawerWidth = 260;
+const drawerWidth = 240;
 
 export default function SiderBarPage({
   children,
