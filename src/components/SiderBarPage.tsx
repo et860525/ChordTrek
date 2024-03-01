@@ -3,7 +3,6 @@
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
@@ -16,16 +15,20 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import MusicNoteIcon from "@mui/icons-material/MusicNote";
 import ArticleIcon from "@mui/icons-material/Article";
+import HomeIcon from "@mui/icons-material/Home";
 import ListItemText from "@mui/material/ListItemText";
 import { NextLinkComposed } from "./Link";
+import { usePathname } from "next/navigation";
 
-const drawerWidth = 240;
+const drawerWidth = 260;
 
 export default function SiderBarPage({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pathname = usePathname();
+
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
 
@@ -50,6 +53,7 @@ export default function SiderBarPage({
   };
 
   const linkItems: linkProp[] = [
+    { pathname: "/", primary: "Home" },
     { pathname: "/tabs", primary: "Tabs" },
     {
       pathname: "/editor",
@@ -57,11 +61,11 @@ export default function SiderBarPage({
     },
   ];
 
-  const linkItemIcons: any = [<MusicNoteIcon />, <ArticleIcon />];
+  const linkItemIcons: any = [<HomeIcon />, <MusicNoteIcon />, <ArticleIcon />];
 
   const drawer = (
     <div>
-      <List>
+      <List sx={{ mt: 4, px: 2 }}>
         {linkItems.map((prop, index) => (
           <ListItem key={prop.primary} disablePadding>
             <ListItemButton
@@ -69,19 +73,24 @@ export default function SiderBarPage({
               to={{
                 pathname: prop.pathname,
               }}
+              sx={{ borderRadius: 2, "&:hover": { background: "#F5EDE8" } }}
+              onClick={(event) => {
+                handleDrawerToggle();
+              }}
             >
               <ListItemIcon>{linkItemIcons[index]}</ListItemIcon>
-              <ListItemText primary={prop.primary} />
+              <ListItemText
+                primaryTypographyProps={{ fontWeight: "700" }}
+                primary={prop.primary}
+              />
             </ListItemButton>
           </ListItem>
         ))}
       </List>
-      <Divider />
     </div>
   );
   return (
     <Box sx={{ display: "flex" }}>
-      <CssBaseline />
       <AppBar
         position="fixed"
         sx={{
@@ -101,7 +110,7 @@ export default function SiderBarPage({
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Responsive drawer
+            ChordTrek
           </Typography>
         </Toolbar>
       </AppBar>
@@ -136,6 +145,7 @@ export default function SiderBarPage({
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
+              borderRight: 0,
             },
           }}
           open
