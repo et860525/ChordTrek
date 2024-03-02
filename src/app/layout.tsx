@@ -1,10 +1,11 @@
+import "./globals.css";
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "@/utils/theme";
 import SiderBarPage from "@/components/SiderBarPage";
 import CssBaseline from "@mui/material/CssBaseline";
-import "./globals.css";
+import { StyledEngineProvider } from "@mui/material/styles";
 
 const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
@@ -24,12 +25,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <ThemeProvider theme={theme}>
-        <body className={roboto.className}>
-          <CssBaseline />
-          <SiderBarPage>{children}</SiderBarPage>
-        </body>
-      </ThemeProvider>
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={theme}>
+          <body className={roboto.className}>
+            <CssBaseline />
+            <SiderBarPage>{children}</SiderBarPage>
+          </body>
+        </ThemeProvider>
+      </StyledEngineProvider>
     </html>
   );
 }
